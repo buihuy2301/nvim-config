@@ -70,4 +70,20 @@ return {
       },
     },
   },
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    opts = {
+      image = {
+        enabled = true,
+        doc = {
+          inline = true, -- Renders images directly inside markdown
+          float = false,
+          max_width = 80,
+          max_height = 40,
+        },
+      },
+    },
+  },
 }
