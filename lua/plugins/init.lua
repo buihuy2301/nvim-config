@@ -62,6 +62,21 @@ return {
     cmd = "Neogit", -- Lazy loads when you run the command
   },
   {
+    "scalameta/nvim-metals",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    ft = { "scala", "sbt", "java" },
+    config = function()
+      require("configs.metals").setup()
+    end,
+  },
+  {
+    "lewis6991/gitsigns.nvim",
+    opts = function(_, opts)
+      opts.on_attach = require("configs.gitsigns").on_attach
+      return opts
+    end,
+  },
+  {
     "nvim-tree/nvim-tree.lua",
     opts = {
       filters = {
