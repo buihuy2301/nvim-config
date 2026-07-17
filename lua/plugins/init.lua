@@ -100,6 +100,12 @@ return {
     },
   },
   {
+    "m4xshen/hardtime.nvim",
+    dependencies = { "MunifTanjim/nui.nvim" },
+    event = "BufReadPost",
+    opts = {},
+  },
+  {
     "folke/snacks.nvim",
     priority = 1000,
     lazy = false,
