@@ -8,7 +8,8 @@ return {
         "lua_ls",
         "html",
         "cssls",
-        "pyright", -- Python LSP
+        "basedpyright", -- Python LSP (type-checking)
+        "ruff", -- Python linter + import sorting (native LSP)
         "gopls", -- Go LSP
         "black", -- Python Formatter (for conform)
         "gofmt", -- Go Formatter (for conform)

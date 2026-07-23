@@ -14,12 +14,62 @@ lsp.config('*', {
 })
 
 ---------------------------------------------------------
--- Python (pyright)
+-- Python (basedpyright)
 ---------------------------------------------------------
+-- Root at the Python project (venv lives here) BEFORE falling back to .git,
+-- otherwise the venv is never found and imports fail to resolve (gd gets
+-- stuck on the import row).
 lsp.config.basedpyright = {
   cmd = { "basedpyright-langserver", "--stdio" },
   filetypes = { "python" },
-  root_markers = { ".git", "pyproject.toml" },
+  root_markers = {
+    "pyproject.toml",
+    "setup.py",
+    "setup.cfg",
+    "requirements.txt",
+    "Pipfile",
+    ".venv",
+    "venv",
+    ".git",
+  },
+  settings = {
+    basedpyright = {
+      -- Ruff owns import sorting; avoid duplicate "organize imports" actions.
+      disableOrganizeImports = true,
+      -- Match VSCode/Pylance's default instead of basedpyright's noisier
+      -- "recommended" mode. Bump to "standard"/"strict" per-project via a
+      -- pyproject.toml [tool.basedpyright] or pyrightconfig.json.
+      analysis = {
+        typeCheckingMode = "standard",
+        autoSearchPaths = true,
+        useLibraryCodeForTypes = true,
+        diagnosticMode = "openFilesOnly",
+      },
+    },
+  },
+}
+---------------------------------------------------------
+-- Python linting / import sorting (ruff — native server)
+---------------------------------------------------------
+-- Split of duties: basedpyright does type-checking + go-to-def + hover;
+-- ruff does lint diagnostics, quick-fixes and import sorting. Hover is
+-- disabled here so basedpyright is the single source of hover text.
+lsp.config.ruff = {
+  cmd = { "ruff", "server" },
+  filetypes = { "python" },
+  root_markers = {
+    "pyproject.toml",
+    "ruff.toml",
+    ".ruff.toml",
+    "setup.py",
+    "setup.cfg",
+    "requirements.txt",
+    ".git",
+  },
+  on_attach = function(client, bufnr)
+    client.server_capabilities.hoverProvider = false
+    on_attach(client, bufnr)
+  end,
 }
 ---------------------------------------------------------
 -- Go (gopls)
@@ -58,5 +108,5 @@ lsp.config.lua_ls = {
   }
 }
 
-local servers = { "html", "cssls", "basedpyright", "gopls", "lua_ls" }
+local servers = { "html", "cssls", "basedpyright", "ruff", "gopls", "lua_ls" }
 vim.lsp.enable(servers)
