@@ -107,6 +107,23 @@ return {
     opts = {},
   },
   {
+    "stevearc/aerial.nvim",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
+    },
+    cmd = { "AerialToggle", "AerialOpen", "AerialNavToggle" },
+    opts = {
+      backends = { "lsp", "treesitter", "markdown", "man" },
+      layout = { default_direction = "prefer_right", min_width = 30 },
+      show_guides = true,
+      on_attach = function(bufnr)
+        vim.keymap.set("n", "{", "<cmd>AerialPrev<CR>", { buffer = bufnr, desc = "Aerial prev symbol" })
+        vim.keymap.set("n", "}", "<cmd>AerialNext<CR>", { buffer = bufnr, desc = "Aerial next symbol" })
+      end,
+    },
+  },
+  {
     "folke/snacks.nvim",
     priority = 1000,
     lazy = false,

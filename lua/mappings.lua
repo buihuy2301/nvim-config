@@ -10,6 +10,10 @@ map("n", "<leader>rm", "<cmd>RenderMarkdown toggle<CR>", { desc = "Toggle Render
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
 map("n", "<leader>gs", "<cmd>Neogit<cr>", { desc = "Git Neogit" })
 
+-- Aerial (code outline)
+map("n", "<leader>o", "<cmd>AerialToggle!<cr>", { desc = "Aerial toggle outline" })
+map("n", "<leader>O", "<cmd>AerialNavToggle<cr>", { desc = "Aerial nav window" })
+
 -- Diffview
 map("n", "<leader>gd", "<cmd>DiffviewOpen<cr>", { desc = "Diffview open (working tree)" })
 map("n", "<leader>gD", "<cmd>DiffviewClose<cr>", { desc = "Diffview close" })
